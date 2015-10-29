@@ -4,6 +4,7 @@
 
 @section('content')
     <h1>List users</h1>
+    <a href="{{ URL::route('create') }}">Create</a> | 
     <a href="{{ URL::route('logout') }}">Sign Out</a><br><br>
     <table border="1">
         <thead>
