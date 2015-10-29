@@ -1,14 +1,8 @@
-<html>
-    <head>
-        <title>Edit users</title>
-        <style>
-            div{
-                display: block;
-                margin-bottom: 20px;
-            }
-        </style>
-    </head>
-    <body>
+@extends('layouts.master')
+
+@section('title', 'Edit user')
+
+@section('content')
         <h1>Edit user</h1>
         {{ HTML::ul($errors->all()) }}
         
@@ -31,3 +25,4 @@
         {{ Form::close() }}
     </body>
 </html>
+@stop

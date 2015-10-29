@@ -2,6 +2,8 @@
 
 class UserController extends BaseController {
 
+    protected $layout = 'layouts.master';
+    
     /**
      * Instantiate a new UserController instance.
      */
@@ -17,29 +19,41 @@ class UserController extends BaseController {
     
     public function do_login()
     {
-        $input = Input::all();
         $rules = array(
             'username'   => 'required',
             'password'   => 'required',
         );
         $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
-            return Redirect::to('user.create')
+            return Redirect::to('login')
                 ->withErrors($validator)
                 ->withInput(Input::except('password'));
         } else {
-            $data = array(
-                'username' => $input['username'],
-                'password' => $input['password'],
-            );
-            if(Auth::attempt($data)){
+            if(Auth::attempt(Input::only('username', 'password')))
+            {
                 return Redirect::to('/');
             }else{
-                return Redirect::to('login');
+                return Redirect::to('login')->withErrors('Login Failed');
             }
         }
     }
     
+    public function is_login()
+    {
+        if (Auth::check()) {
+            return true;
+        }else{
+            return Redirect::to('login');
+        }
+    }
+    
+    public function logout()
+    {
+        Auth::logout();
+        Session::flush();
+        return Redirect::to('login');
+    }
+
     public function index()
     {
         $data = User::all();

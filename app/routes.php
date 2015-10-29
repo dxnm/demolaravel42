@@ -11,20 +11,24 @@
 |
 */
 
-Route::get('login', 'UserController@login');
+Route::get('login', array('as'=>'login','uses' => 'UserController@login'));
 
-Route::post('do_login', 'UserController@do_login');
+Route::post('do_login', array('as'=>'do_login','uses' => 'UserController@do_login'));
 
-Route::get('logout', 'UserController@logout');
+Route::group(array('before' => 'auth'), function()
+{
+    Route::get('logout', array('as'=>'logout','uses' => 'UserController@logout'));
 
-Route::get('/', array('uses' => 'UserController@index'));
+    Route::get('/', array('uses' => 'UserController@index'));
 
-Route::get('user/create', array('uses' => 'UserController@create'));
+    Route::get('user/create', array('as'=>'create','uses' => 'UserController@create'));
 
-Route::post('user/store', array('uses' => 'UserController@store'));
+    Route::post('user/store', array('as'=>'store','uses' => 'UserController@store'));
 
-Route::get('user/edit/{id}', array('uses' => 'UserController@edit'));
+    Route::get('user/edit/{id}', array('as'=>'edit','uses' => 'UserController@edit'));
 
-Route::post('user/update/{id}', array('as'=>'update','uses' => 'UserController@update'));
+    Route::post('user/update/{id}', array('as'=>'update','uses' => 'UserController@update'));
 
-Route::get('user/delete/{id}', array('uses' => 'UserController@destroy'));
+    Route::get('user/delete/{id}', array('as'=>'delete','uses' => 'UserController@destroy'));
+
+});

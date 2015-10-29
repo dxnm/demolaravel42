@@ -1,14 +1,8 @@
-<html>
-    <head>
-        <title>Login</title>
-        <style>
-            div{
-                display: block;
-                margin-bottom: 20px;
-            }
-        </style>
-    </head>
-    <body>
+@extends('layouts.master')
+
+@section('title', 'Login')
+
+@section('content')
         <h1>Login</h1>
         {{ HTML::ul($errors->all()) }}
         
@@ -26,4 +20,4 @@
         </div>
         {{ Form::close() }}
     </body>
-</html>
+@stop
